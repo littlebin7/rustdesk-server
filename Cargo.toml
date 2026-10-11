@@ -53,6 +53,9 @@ local-ip-address = "0.5.1"
 dns-lookup = "1.0.8"
 ping = "0.4.0"
 flate2 = "1.0"
+# Build OpenSSL from source: native-tls is in the Linux graph and the musl cross
+# containers have no system libssl-dev, so openssl-sys fails its build script.
+openssl-sys = { version = "0.9", features = ["vendored"] }
 
 [target.'cfg(any(target_os = "macos", target_os = "windows"))'.dependencies]
 # https://github.com/rustdesk/rustdesk-server-pro/issues/189, using native-tls for better tls support
@@ -63,6 +66,7 @@ reqwest = { git = "https://github.com/rustdesk-org/reqwest", features = ["blocki
 
 [build-dependencies]
 hbb_common = { path = "libs/hbb_common" }
+openssl-sys = { version = "0.9", features = ["vendored"] }
 
 [workspace]
 members = ["libs/hbb_common"]
